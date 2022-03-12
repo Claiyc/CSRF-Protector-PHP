@@ -414,13 +414,13 @@ if (!defined('__CSRF_PROTECTOR__')) {
                 self::$cookieConfig = new csrfpCookieConfig(self::$config['cookieConfig']);
             }
 
-            setcookie(
-                self::$config['CSRFP_TOKEN'], 
-                $token,
-                time() + self::$cookieConfig->expire,
-                self::$cookieConfig->path,
-                self::$cookieConfig->domain,
-                (bool) self::$cookieConfig->secure);
+            setcookie(self::$config['CSRFP_TOKEN'], $token, [
+                "expire"=>time() + self::$cookieConfig->expire,
+                "path"=>self::$cookieConfig->path,
+                "domain"=>self::$cookieConfig->domain,
+                "secure"=>(bool) self::$cookieConfig->secure,
+                "samesite"=>"Lax"    
+            ]);
         }
 
         /*
